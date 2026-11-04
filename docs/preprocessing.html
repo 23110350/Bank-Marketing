@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Preprocessing — Bank Marketing Campaign</title>
+  <!-- ============================================
+       Favicon
+       ============================================ -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏦</text></svg>"/>
+  <!-- ============================================
+       Main Stylesheet
+       ============================================ -->
+  <link rel="stylesheet" href="css/style.css" />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+</head>
+<body>
+
+  <!-- ============================================
+       NAVBAR
+       ============================================ -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">🏦 Bank <span>Marketing</span></a>
+      <div class="hamburger" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </div>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="roadmap.html">Roadmap</a></li>
+        <li><a href="dataset.html">Dataset</a></li>
+        <li><a href="eda.html">EDA</a></li>
+        <li><a href="preprocessing.html" class="active">Preprocessing</a></li>
+        <li class="dropdown">
+          <a href="#">Models ▾</a>
+          <ul class="dropdown-menu">
+            <li><a href="logistic.html">📈 Logistic Regression</a></li>
+            <li><a href="decision_tree.html">🌿 Decision Tree</a></li>
+            <li><a href="random_forest.html">🌲 Random Forest</a></li>
+            <li><a href="xgboost.html">⚡ XGBoost</a></li>
+          </ul>
+        </li>
+        <li><a href="results.html">Results</a></li>
+        <li><a href="conclusion.html">Conclusion</a></li>
+        <li><a href="team.html">Project Info</a></li>
+      </ul>
+    </div>
+  </nav>
+  <!-- END NAVBAR -->
+
+
+  <!-- ============================================
+       PAGE HERO
+       ============================================ -->
+  <section class="page-hero">
+    <div class="hero-content">
+      <div class="hero-badge">⚙️ Data Preparation</div>
+      <h1>Data <span>Preprocessing</span></h1>
+      <p>Cleaning, transforming, and balancing data before modeling</p>
+    </div>
+  </section>
+  <!-- END PAGE HERO -->
+
+
+  <!-- ============================================
+       SECTION 1 — Overview
+       ============================================ -->
+  <section class="section">
+    <div class="container">
+
+      <div class="section-header">
+        <h2>📌 Why Preprocessing?</h2>
+        <p>Raw data is never ready for machine learning</p>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="pre-overview">
+        <div class="pre-overview-text">
+          <p>
+            Raw data contains <strong>noise, inconsistencies, and imbalances</strong>
+            that can mislead machine learning models. Preprocessing transforms
+            raw data into a clean, structured format that maximizes model performance.
+          </p>
+          <p>
+            In this project, preprocessing involved <strong>9 key steps</strong>:
+            from handling missing values all the way to balancing the dataset
+            using class weighting in the updated experiment.
+          </p>
+          <a href="notebooks/Reproduce_Experiment.ipynb" target="_blank">Open the Current Reproducible Experiment Notebook</a>
+          <p>The original preprocessing notebook is retained as reference material and does not reproduce the corrected pipeline.</p>
+          <a href="notebooks/Preprocessing.ipynb"
+             target="_blank" class="btn btn-primary" style="margin-top:1rem;">
+            <i class="fas fa-external-link-alt"></i> Download Reference Preprocessing Notebook
+          </a>
+        </div>
+        <div class="pre-overview-steps">
+          <div class="pre-step-badge">1️⃣ Check Duration</div>
+          <div class="pre-step-badge">2️⃣ Remove Duration=0</div>
+          <div class="pre-step-badge">3️⃣ Fix Pdays</div>
+          <div class="pre-step-badge">4️⃣ Encoding</div>
+          <div class="pre-step-badge">5️⃣ Feature Split</div>
+          <div class="pre-step-badge">6️⃣ Train-Test Split</div>
+          <div class="pre-step-badge">7️⃣ Scaling</div>
+          <div class="pre-step-badge">8️⃣ Class weighting</div>
+          <div class="pre-step-badge">9️⃣ Export</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+  <!-- END OVERVIEW -->
+
+
+  <!-- ============================================
+       SECTION 2 — Steps
+       ============================================ -->
+  <section class="section section-alt"><div class="container">
+<div class="section-header"><h2>Class Imbalance Handling in the Updated Experiment</h2><p>Training-only class weighting instead of synthetic oversampling after one-hot encoding</p><div class="section-line"></div></div>
+<div class="updated-analysis-note"><strong>Important methodology update:</strong> The corrected experiment does not use the original SMOTE-after-one-hot-encoding workflow. It uses class weighting where supported, with preprocessing fitted within each training fold. This avoids creating fractional one-hot category indicators through synthetic interpolation.</div>
+<h3>Preserving previous-contact information</h3>
+<p>The original value <code>pdays = -1</code> indicates that the customer was not previously contacted. The updated pipeline preserves this distinction and adds a previous-contact indicator rather than converting -1 to zero, which would incorrectly imply a contact exactly zero days ago.</p>
+<h3>Training-only preprocessing</h3>
+<p>Numeric imputation/scaling and categorical encoding are fitted inside the training pipeline. During cross-validation, each fold learns its own preprocessing from that fold's training partition. The held-out test set is not used to fit transformations or select models.</p>
+</div></section>
+  <!-- END STEPS -->
+
+
+  <!-- ============================================
+       SECTION 3 — Final Results
+       ============================================ -->
+  <section class="section">
+    <div class="container">
+
+      <div class="section-header">
+        <h2>📊 Final Dataset Summary</h2>
+        <p>After all preprocessing steps</p>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="grid-4">
+        <div class="stat-card">
+          <div class="stat-icon">🏋️</div>
+          <div class="stat-value">36,168</div>
+          <div class="stat-label">Training Rows</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🧪</div>
+          <div class="stat-value">9,043</div>
+          <div class="stat-label">Testing Rows</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🔢</div>
+          <div class="stat-value">model inputs</div>
+          <div class="stat-label">Feature representation</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">⚖️</div>
+          <div class="stat-value">Original class ratio</div>
+          <div class="stat-label">Train Balance</div>
+        </div>
+      </div>
+
+      <!-- Summary Table -->
+      <div class="table-wrapper" style="margin-top:2.5rem;">
+        <table>
+          <thead>
+            <tr>
+              <th>Step</th>
+              <th>Action</th>
+              <th>Result</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>01</strong></td>
+              <td>Check Duration = 0</td>
+              <td>Found 3 rows (0.01%)</td>
+              <td><span class="badge badge-green">✅ Done</span></td>
+            </tr>
+            <tr>
+              <td><strong>02</strong></td>
+              <td>Remove Duration = 0</td>
+              <td>45,211 → 45,208 rows</td>
+              <td><span class="badge badge-green">✅ Done</span></td>
+            </tr>
+            <tr>
+              <td><strong>03</strong></td>
+              <td>Fix Pdays = -1 → 0</td>
+              <td>Fixed 36,951 rows</td>
+              <td><span class="badge badge-green">✅ Done</span></td>
+            </tr>
+            <tr>
+              <td><strong>04</strong></td>
+              <td>Encode Categorical</td>
+              <td>17 → 49 columns</td>
+              <td><span class="badge badge-green">✅ Done</span></td>
+            </tr>
+            <tr>
+              <td><strong>05</strong></td>
+              <td>Split Features & Target</td>
+              <td>47 features + 1 target (removed duration)</td>
+              <td><span class="badge badge-green">✅ Done</span></td>
+            </tr>
+            <tr>
+              <td><strong>06</strong></td>
+              <td>Train-Test Split</td>
+              <td>36,166 train (47 features) | 9,043 test (47 features)</td>
+              <td><span class="badge badge-green">✅ Done</span></td>
+            </tr>
+            <tr>
+              <td><strong>07</strong></td>
+              <td>Scale Features (StandardScaler)</td>
+              <td>6 numerical features scaled on training data</td>
+              <td><span class="badge badge-green">✅ Done</span></td>
+            </tr>
+            <tr>
+              <td><strong>08</strong></td>
+              <td>Class weighting</td>
+              <td>36,166 → 36,168 training rows (50/50 balance)</td>
+              <td><span class="badge badge-green">✅ Done</span></td>
+            </tr>
+            <tr>
+              <td><strong>09</strong></td>
+              <td>Export Data</td>
+              <td>train.csv (36,168 × 48) + test.csv (9,043 × 48)</td>
+              <td><span class="badge badge-green">✅ Done</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </section>
+  <!-- END FINAL RESULTS -->
+
+
+  <!-- ============================================
+       SECTION 4 — Key Insights
+       ============================================ -->
+  <section class="section section-alt">
+    <div class="container">
+
+      <div class="section-header">
+        <h2>💡 Key Preprocessing Insights</h2>
+        <p>Important concepts and best practices</p>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="grid-2">
+        <div class="insight-card">
+          <div class="insight-icon">⚠️</div>
+          <h4>Data Leakage Prevention</h4>
+          <p>
+            The updated pipeline fits preprocessing within training folds and keeps the final test set separate.
+            This ensures test data remains completely unseen during
+            preprocessing, providing true performance estimates.
+          </p>
+        </div>
+        <div class="insight-card">
+          <div class="insight-icon">🔄</div>
+          <h4>Why class weighting?</h4>
+          <p>
+            The updated experiment uses class weighting where supported rather than generating synthetic observations after one-hot encoding. The held-out test set retains its original class distribution.
+          </p>
+        </div>
+        <div class="insight-card">
+          <div class="insight-icon">🏆</div>
+          <h4>StandardScaler Order Matters</h4>
+          <p>
+            Fit the scaler on training data only, then use those statistics
+            to transform test data. This prevents test set statistics from
+            influencing the training process.
+          </p>
+        </div>
+        <div class="insight-card">
+          <div class="insight-icon">❌</div>
+          <h4>Why Remove Duration?</h4>
+          <p>
+            Call duration is only known AFTER the call completes. In production,
+            we cannot use this to predict subscription. Removing it ensures our
+            model is deployable in real-world scenarios and prevents data leakage.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+  <!-- END KEY INSIGHTS -->
+
+
+  <!-- ============================================
+       NEXT STEP CTA
+       ============================================ -->
+  <section class="next-step-cta">
+    <div class="container">
+      <div class="next-step-content">
+        <span class="next-step-label">Next Step</span>
+        <h3>📈 Logistic Regression</h3>
+        <p>Training our first classification model</p>
+        <a href="logistic.html" class="btn btn-primary">
+          <i class="fas fa-arrow-right"></i> Go to Logistic Regression
+        </a>
+      </div>
+    </div>
+  </section>
+  <!-- END NEXT STEP -->
+
+
+  <!-- ============================================
+       FOOTER
+       ============================================ -->
+  <footer>
+    <p>
+      🏦 Bank Marketing Campaign &nbsp;|&nbsp;
+      Machine Learning Project &nbsp;|&nbsp;
+      <span>ES 335 Individual Course Project — IIT Gandhinagar</span> &nbsp;
+    </p>
+  </footer>
+  <!-- END FOOTER -->
+
+
+  <!-- ============================================
+       JAVASCRIPT
+       ============================================ -->
+  <!--
+  <script>
+    /* ----- Mobile Menu Toggle ----- */
+    function toggleMenu() {
+      document.getElementById('navLinks').classList.toggle('open');
+    }
+
+    /* ----- Active nav link ----- */
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      if (link.href === window.location.href) {
+        link.classList.add('active');
+      }
+    });
+
+    /* ----- Animate step cards on scroll ----- */
+    const stepCards = document.querySelectorAll('.pre-step-card');
+    const stepObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('step-visible');
+        }
+      });
+    }, { threshold: 0.1 });
+    stepCards.forEach(card => stepObserver.observe(card));
+  </script>
+  -->
+  <script src="js/main.js"></script>
+
+  <!-- ============================================
+       Floating Repository Button (Fixed)
+       ============================================ -->
+
+</body>
+</html>
